@@ -1,8 +1,37 @@
 import "./App.css";
 import { useCount } from "./useCount";
+import {
+  Button,
+  CircularProgress,
+  LinearProgress,
+  Avatar,
+  Typography,
+  Paper,
+  Container,
+  Fab,
+  Box,
+  Grid,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { PlusOneRounded } from "@material-ui/icons";
+
+import "@fontsource/roboto";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+  avatar: {
+    width: theme.spacing(8),
+    height: theme.spacing(8),
+  },
+}));
 
 function InitialLoadingView() {
-  return <div>Loading...</div>;
+  return <CircularProgress />;
 }
 
 function CountView({
@@ -15,16 +44,29 @@ function CountView({
   isLoading: boolean;
 }) {
   return (
-    <>
-      <div>Count: {count}</div>
-      <button onClick={() => onClick()}>
-        Count!{isLoading && ` Loading...`}
-      </button>
-    </>
+    <Grid container spacing={3} justifyContent="center" alignItems="center">
+      <Grid item>
+        <Typography variant="h3" component="h2">
+          Count: {count}
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Fab
+          color="primary"
+          aria-label="update"
+          onClick={() => onClick()}
+          disabled={isLoading}
+        >
+          {isLoading ? <CircularProgress /> : <PlusOneRounded />}
+        </Fab>
+      </Grid>
+    </Grid>
   );
 }
 
 function App() {
+  const classes = useStyles();
+
   const {
     isLoadingInitial,
     isLoadingUpdate,
@@ -38,8 +80,21 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header>***REMOVED***</header>
+    <Container>
+      <Grid container spacing={3} justifyContent="center" alignItems="center">
+        <Grid item>
+          <Typography variant="h2" component="h1">
+            ***REMOVED***
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Avatar
+            alt="Purple Cow"
+            className={classes.avatar}
+            src="***REMOVED***"
+          />
+        </Grid>
+      </Grid>
       <section>
         {isLoadingInitial ? (
           <InitialLoadingView />
@@ -51,7 +106,7 @@ function App() {
           />
         )}
       </section>
-    </div>
+    </Container>
   );
 }
 
