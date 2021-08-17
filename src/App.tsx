@@ -1,21 +1,37 @@
 import "./App.css";
 import { useCount } from "./useCount";
 
-function LoadingView() {
+function InitialLoadingView() {
   return <div>Loading...</div>;
 }
 
-function CountView({ count, onClick }: { count: number; onClick: () => void }) {
+function CountView({
+  count,
+  onClick,
+  isLoading,
+}: {
+  count: number;
+  onClick: () => void;
+  isLoading: boolean;
+}) {
   return (
     <>
       <div>Count: {count}</div>
-      <button onClick={() => onClick()}>Count!</button>
+      <button onClick={() => onClick()}>
+        Count!{isLoading && ` Loading...`}
+      </button>
     </>
   );
 }
 
 function App() {
-  const { isLoading, error, count, requestUpdatedCount } = useCount();
+  const {
+    isLoadingInitial,
+    isLoadingUpdate,
+    error,
+    count,
+    requestUpdatedCount,
+  } = useCount();
 
   if (error) {
     throw new Error("An error has occured");
@@ -25,10 +41,14 @@ function App() {
     <div className="App">
       <header>***REMOVED***</header>
       <section>
-        {isLoading ? (
-          <LoadingView />
+        {isLoadingInitial ? (
+          <InitialLoadingView />
         ) : (
-          <CountView count={count} onClick={requestUpdatedCount} />
+          <CountView
+            count={count}
+            onClick={requestUpdatedCount}
+            isLoading={isLoadingUpdate}
+          />
         )}
       </section>
     </div>

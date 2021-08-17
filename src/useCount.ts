@@ -77,18 +77,28 @@ const useUpdateCount = ({
   return { isLoading };
 };
 
-export const useCount = () => {
+interface UseCountResponse {
+  isLoadingInitial: boolean;
+  isLoadingUpdate: boolean;
+  error: Error | null;
+  count: number;
+  requestUpdatedCount: () => void;
+}
+
+type UseCount = () => UseCountResponse;
+
+export const useCount: UseCount = () => {
   const [requestEnabled, setRequestEnabled] = useState(false);
   const [count, setCount] = useState<Count>(null);
   const [error, setError] = useState<Error | null>(null);
 
-  const { isLoading: isGetLoading } = useGetInitialCount({
+  const { isLoading: isLoadingInitial } = useGetInitialCount({
     count,
     setCount,
     setError,
   });
 
-  const { isLoading: isUpdateLoading } = useUpdateCount({
+  const { isLoading: isLoadingUpdate } = useUpdateCount({
     setCount,
     setError,
     requestEnabled,
@@ -98,8 +108,8 @@ export const useCount = () => {
   useDebugValue(`Count:${count}`);
 
   return {
-    // TODO differentiate because I want to show different loading UX
-    isLoading: isGetLoading || isUpdateLoading,
+    isLoadingInitial,
+    isLoadingUpdate,
     error,
     count: count == null ? 0 : count,
     requestUpdatedCount: () => setRequestEnabled(true),
