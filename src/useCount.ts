@@ -17,12 +17,17 @@ const useGetInitialCount = ({
   setCount: SetCountFn;
   setError: SetErrorFn;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const getInitialCount = useCallback(async () => {
     try {
+      setIsLoading(true);
       const { value } = await countapi.get(apiKey);
       setCount(value);
+      setIsLoading(false);
     } catch (error) {
       setError(error);
+      setIsLoading(false);
     }
   }, [setError, setCount]);
 
@@ -31,6 +36,10 @@ const useGetInitialCount = ({
       getInitialCount();
     }
   });
+
+  return {
+    isLoading,
+  };
 };
 
 const useUpdateCount = ({
@@ -44,12 +53,17 @@ const useUpdateCount = ({
   requestEnabled: boolean;
   setRequestEnabled: (enabled: boolean) => void;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const sendRequest = useCallback(async () => {
+    setIsLoading(true);
     try {
       const { value } = await countapi.update(apiKey, incrementAmount);
       setCount(value);
+      setIsLoading(false);
     } catch (error) {
       setError(error);
+      setIsLoading(false);
     }
   }, [setError, setCount]);
 
@@ -59,6 +73,8 @@ const useUpdateCount = ({
       sendRequest();
     }
   }, [requestEnabled, setRequestEnabled, sendRequest]);
+
+  return { isLoading };
 };
 
 export const useCount = () => {
@@ -66,14 +82,24 @@ export const useCount = () => {
   const [count, setCount] = useState<Count>(null);
   const [error, setError] = useState<Error | null>(null);
 
-  useGetInitialCount({ count, setCount, setError });
+  const { isLoading: isGetLoading } = useGetInitialCount({
+    count,
+    setCount,
+    setError,
+  });
 
-  useUpdateCount({ setCount, setError, requestEnabled, setRequestEnabled });
+  const { isLoading: isUpdateLoading } = useUpdateCount({
+    setCount,
+    setError,
+    requestEnabled,
+    setRequestEnabled,
+  });
 
   useDebugValue(`Count:${count}`);
 
   return {
-    isLoading: count == null,
+    // TODO differentiate because I want to show different loading UX
+    isLoading: isGetLoading || isUpdateLoading,
     error,
     count: count == null ? 0 : count,
     requestUpdatedCount: () => setRequestEnabled(true),
