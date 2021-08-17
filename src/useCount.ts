@@ -2,6 +2,7 @@ import { useCallback, useDebugValue, useEffect, useState } from "react";
 import countapi from "countapi-js";
 
 const apiKey = "***REMOVED***";
+const incrementAmount = 1;
 
 type Count = number | null;
 
@@ -43,7 +44,7 @@ const useUpdateCount = ({
 }) => {
   const sendRequest = useCallback(async () => {
     try {
-      const { value } = await countapi.update(apiKey, 0);
+      const { value } = await countapi.update(apiKey, incrementAmount);
       setCount(value);
     } catch (error) {
       setError(error);
