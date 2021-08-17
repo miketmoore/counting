@@ -31,3 +31,9 @@ yarn install
 ```
 PORT=3000 yarn start
 ```
+
+## Format Code
+
+```
+yarn format
+```
