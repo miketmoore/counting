@@ -5,6 +5,8 @@ const apiKey = "***REMOVED***";
 const incrementAmount = 1;
 
 type Count = number | null;
+type SetCountFn = (count: Count) => void;
+type SetErrorFn = (error: Error) => void;
 
 const useGetInitialCount = ({
   count,
@@ -12,8 +14,8 @@ const useGetInitialCount = ({
   setError,
 }: {
   count: Count;
-  setCount: (count: Count) => void;
-  setError: (error: Error) => void;
+  setCount: SetCountFn;
+  setError: SetErrorFn;
 }) => {
   const getInitialCount = useCallback(async () => {
     try {
@@ -37,8 +39,8 @@ const useUpdateCount = ({
   requestEnabled,
   setRequestEnabled,
 }: {
-  setCount: (count: Count) => void;
-  setError: (error: Error) => void;
+  setCount: SetCountFn;
+  setError: SetErrorFn;
   requestEnabled: boolean;
   setRequestEnabled: (enabled: boolean) => void;
 }) => {
@@ -68,17 +70,12 @@ export const useCount = () => {
 
   useUpdateCount({ setCount, setError, requestEnabled, setRequestEnabled });
 
-  useEffect(() => {
-    if (error) {
-      // Let the calling code handle the error
-      throw error;
-    }
-  });
-
   useDebugValue(`Count:${count}`);
 
   return {
-    count,
+    isLoading: count == null,
+    error,
+    count: count == null ? 0 : count,
     requestUpdatedCount: () => setRequestEnabled(true),
   };
 };
