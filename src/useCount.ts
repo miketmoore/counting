@@ -3,11 +3,17 @@ import countapi from "countapi-js";
 
 const apiKey = "***REMOVED***";
 
-export const useCount = () => {
-  const [requestEnabled, setRequestEnabled] = useState(false);
-  const [count, setCount] = useState<number | null>(null);
-  const [error, setError] = useState<Error | null>(null);
+type Count = number | null;
 
+const useGetInitialCount = ({
+  count,
+  setCount,
+  setError,
+}: {
+  count: Count;
+  setCount: (count: Count) => void;
+  setError: (error: Error) => void;
+}) => {
   const getInitialCount = useCallback(async () => {
     try {
       const { value } = await countapi.get(apiKey);
@@ -15,22 +21,34 @@ export const useCount = () => {
     } catch (error) {
       setError(error);
     }
-  }, [setError]);
+  }, [setError, setCount]);
 
   useEffect(() => {
     if (count == null) {
       getInitialCount();
     }
   });
+};
 
+const useUpdateCount = ({
+  setCount,
+  setError,
+  requestEnabled,
+  setRequestEnabled,
+}: {
+  setCount: (count: Count) => void;
+  setError: (error: Error) => void;
+  requestEnabled: boolean;
+  setRequestEnabled: (enabled: boolean) => void;
+}) => {
   const sendRequest = useCallback(async () => {
     try {
       const { value } = await countapi.update(apiKey, 0);
       setCount(value);
     } catch (error) {
-      setError(new Error("The count request failed"));
+      setError(error);
     }
-  }, [setCount]);
+  }, [setError, setCount]);
 
   useEffect(() => {
     if (requestEnabled) {
@@ -38,10 +56,20 @@ export const useCount = () => {
       sendRequest();
     }
   }, [requestEnabled, setRequestEnabled, sendRequest]);
+};
+
+export const useCount = () => {
+  const [requestEnabled, setRequestEnabled] = useState(false);
+  const [count, setCount] = useState<Count>(null);
+  const [error, setError] = useState<Error | null>(null);
+
+  useGetInitialCount({ count, setCount, setError });
+
+  useUpdateCount({ setCount, setError, requestEnabled, setRequestEnabled });
 
   useEffect(() => {
     if (error) {
-      // This will be caught by the ErrorBoundary component
+      // Let the calling code handle the error
       throw error;
     }
   });
