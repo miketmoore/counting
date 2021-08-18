@@ -26,17 +26,22 @@ export function CountView({
     <Grid container spacing={3} justifyContent="center" alignItems="center">
       <Grid item>
         <Typography variant="h3" component="h2">
-          Count: {count}
+          Count: <span data-testid="count-value">{count}</span>
         </Typography>
       </Grid>
       <Grid item>
         <Fab
+          data-testid="update-button"
           color="primary"
           aria-label="update"
           onClick={() => onClick()}
           disabled={isLoading}
         >
-          {isLoading ? <CircularProgress /> : <PlusOneRounded />}
+          {isLoading ? (
+            <CircularProgress data-testid="loading-indicator" />
+          ) : (
+            <PlusOneRounded data-testid="plus-one-icon" />
+          )}
         </Fab>
       </Grid>
     </Grid>
