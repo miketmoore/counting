@@ -14,8 +14,8 @@ import {
   Snackbar,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { PlusOneRounded } from "@material-ui/icons";
 import MuiAlert from "@material-ui/lab/Alert";
+import { CountView } from "./CountView";
 
 import "@fontsource/roboto";
 
@@ -34,36 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
 function InitialLoadingView() {
   return <CircularProgress />;
-}
-
-function CountView({
-  count,
-  onClick,
-  isLoading,
-}: {
-  count: number;
-  onClick: () => void;
-  isLoading: boolean;
-}) {
-  return (
-    <Grid container spacing={3} justifyContent="center" alignItems="center">
-      <Grid item>
-        <Typography variant="h3" component="h2">
-          Count: {count}
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Fab
-          color="primary"
-          aria-label="update"
-          onClick={() => onClick()}
-          disabled={isLoading}
-        >
-          {isLoading ? <CircularProgress /> : <PlusOneRounded />}
-        </Fab>
-      </Grid>
-    </Grid>
-  );
 }
 
 function App() {
