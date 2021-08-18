@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(8),
     height: theme.spacing(8),
   },
+  grid: {
+    height: "100%",
+  },
 }));
 
 function InitialLoadingView() {
@@ -84,7 +87,12 @@ function App() {
           An error occurred
         </MuiAlert>
       </Snackbar>
-      <Grid container spacing={3} justifyContent="center" alignItems="center">
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
         <Grid item>
           <Typography variant="h2" component="h1">
             ***REMOVED***
@@ -98,17 +106,24 @@ function App() {
           />
         </Grid>
       </Grid>
-      <section>
-        {isLoadingInitial ? (
-          <InitialLoadingView />
-        ) : (
-          <CountView
-            count={count}
-            onClick={requestUpdatedCount}
-            isLoading={isLoadingUpdate}
-          />
-        )}
-      </section>
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item>
+          {isLoadingInitial ? (
+            <InitialLoadingView />
+          ) : (
+            <CountView
+              count={count}
+              onClick={requestUpdatedCount}
+              isLoading={isLoadingUpdate}
+            />
+          )}
+        </Grid>
+      </Grid>
     </Container>
   );
 }
