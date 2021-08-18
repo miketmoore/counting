@@ -11,9 +11,11 @@ import {
   Fab,
   Box,
   Grid,
+  Snackbar,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { PlusOneRounded } from "@material-ui/icons";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import "@fontsource/roboto";
 
@@ -75,12 +77,13 @@ function App() {
     requestUpdatedCount,
   } = useCount();
 
-  if (error) {
-    throw new Error("An error has occured");
-  }
-
   return (
     <Container>
+      <Snackbar open={error != null} autoHideDuration={6000}>
+        <MuiAlert elevation={6} variant="filled" severity="error">
+          An error occurred
+        </MuiAlert>
+      </Snackbar>
       <Grid container spacing={3} justifyContent="center" alignItems="center">
         <Grid item>
           <Typography variant="h2" component="h1">

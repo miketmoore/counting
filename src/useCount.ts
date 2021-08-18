@@ -16,15 +16,21 @@ const useGetInitialCount = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const getInitialCount = useCallback(async () => {
+    const handleError = (errorMessage: string) => {
+      setError(new Error(errorMessage));
+      setIsLoading(false);
+    };
     try {
       setIsLoading(true);
       const response = await fetch("/api/count/get", { method: "GET" });
+      if (response.status >= 400) {
+        handleError("Get request returned an error");
+      }
       const { count } = await response.json();
       setCount(count);
       setIsLoading(false);
     } catch (error) {
-      setError(error);
-      setIsLoading(false);
+      handleError("Get request failed");
     }
   }, [setError, setCount]);
 
@@ -53,15 +59,21 @@ const useUpdateCount = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const sendRequest = useCallback(async () => {
-    setIsLoading(true);
+    const handleError = (errorMessage: string) => {
+      setError(new Error(errorMessage));
+      setIsLoading(false);
+    };
     try {
+      setIsLoading(true);
       const response = await fetch("/api/count/update", { method: "PUT" });
+      if (response.status >= 400) {
+        handleError("Update request returned an error");
+      }
       const { count } = await response.json();
       setCount(count);
       setIsLoading(false);
     } catch (error) {
-      setError(error);
-      setIsLoading(false);
+      handleError("Update request failed");
     }
   }, [setError, setCount]);
 
