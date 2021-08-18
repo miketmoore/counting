@@ -1,8 +1,4 @@
 import { useCallback, useDebugValue, useEffect, useState } from "react";
-import countapi from "countapi-js";
-
-const apiKey = "***REMOVED***";
-const incrementAmount = 1;
 
 type Count = number | null;
 type SetCountFn = (count: Count) => void;
@@ -22,8 +18,9 @@ const useGetInitialCount = ({
   const getInitialCount = useCallback(async () => {
     try {
       setIsLoading(true);
-      const { value } = await countapi.get(apiKey);
-      setCount(value);
+      const response = await fetch("/api/count/get", { method: "GET" });
+      const { count } = await response.json();
+      setCount(count);
       setIsLoading(false);
     } catch (error) {
       setError(error);
@@ -58,8 +55,9 @@ const useUpdateCount = ({
   const sendRequest = useCallback(async () => {
     setIsLoading(true);
     try {
-      const { value } = await countapi.update(apiKey, incrementAmount);
-      setCount(value);
+      const response = await fetch("/api/count/update", { method: "PUT" });
+      const { count } = await response.json();
+      setCount(count);
       setIsLoading(false);
     } catch (error) {
       setError(error);
