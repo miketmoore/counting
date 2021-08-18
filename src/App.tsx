@@ -86,40 +86,58 @@ function App() {
       </Snackbar>
       <Grid
         container
-        direction="row"
-        justifyContent="center"
+        spacing={0}
+        direction="column"
         alignItems="center"
+        justify="center"
+        style={{ minHeight: "100vh" }}
       >
-        <Grid item>
-          <Typography variant="h2" component="h1">
-            ***REMOVED***
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Avatar
-            alt="Purple Cow"
-            className={classes.avatar}
-            src="***REMOVED***"
-          />
-        </Grid>
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Grid item>
-          {isLoadingInitial ? (
-            <InitialLoadingView />
-          ) : (
-            <CountView
-              count={count}
-              onClick={requestUpdatedCount}
-              isLoading={isLoadingUpdate}
-            />
-          )}
-        </Grid>
+        <Paper
+          elevation={6}
+          style={{
+            padding: 40,
+          }}
+        >
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={3}
+          >
+            <Grid item>
+              <Typography variant="h3" component="h1">
+                ***REMOVED***
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Avatar
+                alt="Purple Cow"
+                className={classes.avatar}
+                src="***REMOVED***"
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={3}
+          >
+            <Grid item>
+              {isLoadingInitial ? (
+                <InitialLoadingView />
+              ) : (
+                <CountView
+                  count={count}
+                  onClick={requestUpdatedCount}
+                  isLoading={isLoadingUpdate}
+                />
+              )}
+            </Grid>
+          </Grid>
+        </Paper>
       </Grid>
     </Container>
   );
