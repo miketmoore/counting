@@ -1,49 +1,6 @@
 import { useCallback, useDebugValue, useEffect, useState } from "react";
-
-type Count = number | null;
-type SetCountFn = (count: Count) => void;
-type SetErrorFn = (error: Error) => void;
-
-const useGetInitialCount = ({
-  count,
-  setCount,
-  setError,
-}: {
-  count: Count;
-  setCount: SetCountFn;
-  setError: SetErrorFn;
-}) => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getInitialCount = useCallback(async () => {
-    const handleError = (errorMessage: string) => {
-      setError(new Error(errorMessage));
-      setIsLoading(false);
-    };
-    try {
-      setIsLoading(true);
-      const response = await fetch("/api/count/get", { method: "GET" });
-      if (response.status >= 400) {
-        handleError("Get request returned an error");
-      }
-      const { count } = await response.json();
-      setCount(count);
-      setIsLoading(false);
-    } catch (error) {
-      handleError("Get request failed");
-    }
-  }, [setError, setCount]);
-
-  useEffect(() => {
-    if (count == null) {
-      getInitialCount();
-    }
-  });
-
-  return {
-    isLoading,
-  };
-};
+import { Count, SetCountFn, SetErrorFn } from "./count-types";
+import { useGetInitialCount } from "./useGetInitialCount";
 
 const useUpdateCount = ({
   setCount,
