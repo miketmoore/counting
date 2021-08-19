@@ -1,19 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Count, SetCountFn, SetErrorFn } from "./count-types";
 
-export const useGetInitialCount = ({
-  count,
-  setCount,
-  setError,
-}: {
-  count: Count;
-  setCount: SetCountFn;
-  setError: SetErrorFn;
-}) => {
+export const useGetInitialCount = ({ enabled }: { enabled: boolean }) => {
+  const [count, setCount] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    let mounted = true;
     const fetchData = async () => {
       const handleError = (errorMessage: string) => {
         setError(new Error(errorMessage));
@@ -22,11 +16,11 @@ export const useGetInitialCount = ({
       try {
         setIsLoading(true);
         const response = await fetch("/api/count/get", { method: "GET" });
-        if (mounted) {
-          if (response.status >= 400) {
-            handleError("Get request returned an error");
-          }
-          const { count } = await response.json();
+        if (response.status >= 400) {
+          handleError("Get request returned an error");
+        }
+        const { count } = await response.json();
+        if (mountedRef.current) {
           setIsLoading(false);
           setCount(count);
         }
@@ -34,15 +28,20 @@ export const useGetInitialCount = ({
         handleError("Get request failed");
       }
     };
-    if (count == null) {
+    if (count == null && enabled) {
       fetchData();
     }
-    return () => {
-      mounted = false;
-    };
   }, [count]);
 
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
   return {
+    count,
     isLoading,
+    error,
   };
 };

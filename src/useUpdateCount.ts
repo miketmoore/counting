@@ -1,21 +1,19 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import { SetCountFn, SetErrorFn } from "./count-types";
 
 export const useUpdateCount = ({
-  setCount,
-  setError,
   requestEnabled,
   setRequestEnabled,
 }: {
-  setCount: SetCountFn;
-  setError: SetErrorFn;
   requestEnabled: boolean;
   setRequestEnabled: (enabled: boolean) => void;
 }) => {
+  const [count, setCount] = useState<number | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    let mounted = true;
     const sendRequest = async () => {
       const handleError = (errorMessage: string) => {
         setError(new Error(errorMessage));
@@ -24,11 +22,11 @@ export const useUpdateCount = ({
       try {
         setIsLoading(true);
         const response = await fetch("/api/count/update", { method: "PUT" });
-        if (mounted) {
-          if (response.status >= 400) {
-            handleError("Update request returned an error");
-          }
-          const { count } = await response.json();
+        if (response.status >= 400) {
+          handleError("Update request returned an error");
+        }
+        const { count } = await response.json();
+        if (mountedRef.current) {
           setCount(count);
           setIsLoading(false);
         }
@@ -40,10 +38,24 @@ export const useUpdateCount = ({
       setRequestEnabled(false);
       sendRequest();
     }
-    return () => {
-      mounted = false;
-    };
-  }, [requestEnabled, setRequestEnabled]);
+  }, [
+    mountedRef,
+    requestEnabled,
+    setRequestEnabled,
+    setError,
+    setIsLoading,
+    setCount,
+  ]);
 
-  return { isLoading };
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  return {
+    count,
+    isLoading,
+    error,
+  };
 };
