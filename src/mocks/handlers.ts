@@ -9,4 +9,12 @@ export const handlers = [
       })
     );
   }),
+  rest.put("/api/count/update", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        count: 235,
+      })
+    );
+  }),
 ];
