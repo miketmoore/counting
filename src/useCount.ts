@@ -1,5 +1,5 @@
-import { useCallback, useDebugValue, useEffect, useState } from "react";
-import { Count, SetCountFn, SetErrorFn } from "./count-types";
+import { useDebugValue, useEffect, useState } from "react";
+import { Count } from "./count-types";
 import { useGetInitialCount } from "./useGetInitialCount";
 import { useUpdateCount } from "./useUpdateCount";
 
@@ -17,7 +17,6 @@ export const useCount: UseCount = () => {
   const [initialEnabled, setInitialEnabled] = useState(true);
   const [requestEnabled, setRequestEnabled] = useState(false);
   const [count, setCount] = useState<Count>(null);
-  const [error, setError] = useState<Error | null>(null);
 
   const {
     count: initialCount,
@@ -32,7 +31,7 @@ export const useCount: UseCount = () => {
       setCount(initialCount);
       setInitialEnabled(false);
     }
-  });
+  }, [initialCount, setCount, setInitialEnabled]);
 
   const {
     count: updatedCount,
@@ -47,7 +46,7 @@ export const useCount: UseCount = () => {
     if (updatedCount) {
       setCount(updatedCount);
     }
-  });
+  }, [updatedCount]);
 
   useDebugValue(`Count:${count}`);
 

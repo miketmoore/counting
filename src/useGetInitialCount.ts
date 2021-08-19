@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Count, SetCountFn, SetErrorFn } from "./count-types";
+import { useEffect, useRef, useState } from "react";
 
 export const useGetInitialCount = ({ enabled }: { enabled: boolean }) => {
   const [count, setCount] = useState<number | null>(null);
@@ -31,7 +30,7 @@ export const useGetInitialCount = ({ enabled }: { enabled: boolean }) => {
     if (count == null && enabled) {
       fetchData();
     }
-  }, [count]);
+  }, [count, enabled]);
 
   useEffect(() => {
     return () => {

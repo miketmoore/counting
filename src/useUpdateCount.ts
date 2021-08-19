@@ -1,5 +1,4 @@
-import { useCallback, useState, useEffect, useRef } from "react";
-import { SetCountFn, SetErrorFn } from "./count-types";
+import { useState, useEffect, useRef } from "react";
 
 export const useUpdateCount = ({
   requestEnabled,
