@@ -23,14 +23,14 @@ test("onClick handler works when clicking button", async () => {
 test("loading indicator is visible when isLoading is true", async () => {
   render(<CountView onClick={jest.fn()} count={123} isLoading={true} />);
   await waitFor(() =>
-    expect(screen.getByTestId("loading-indicator")).toBeInTheDocument()
+    expect(screen.getByTestId("loadingfab-progress")).toBeInTheDocument()
   );
 });
 
 test("loading indicator is hidden when isLoading is false", async () => {
   render(<CountView onClick={jest.fn()} count={123} isLoading={false} />);
   await waitFor(() =>
-    expect(screen.queryByTestId("loading-indicator")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("loadingfab-progress")).not.toBeInTheDocument()
   );
 });
 

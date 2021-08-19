@@ -1,16 +1,5 @@
-import {
-  Button,
-  CircularProgress,
-  LinearProgress,
-  Avatar,
-  Typography,
-  Paper,
-  Container,
-  Fab,
-  Box,
-  Grid,
-  Snackbar,
-} from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
+import { LoadingFab } from "./LoadingFab";
 import { PlusOneRounded } from "@material-ui/icons";
 
 export function CountView({
@@ -30,19 +19,15 @@ export function CountView({
         </Typography>
       </Grid>
       <Grid item>
-        <Fab
-          data-testid="update-button"
+        <LoadingFab
           color="primary"
-          aria-label="update"
-          onClick={() => onClick()}
-          disabled={isLoading}
+          isLoading={isLoading}
+          onClick={onClick}
+          testId="update-button"
+          ariaLabel="update"
         >
-          {isLoading ? (
-            <CircularProgress data-testid="loading-indicator" />
-          ) : (
-            <PlusOneRounded data-testid="plus-one-icon" />
-          )}
-        </Fab>
+          <PlusOneRounded data-testid="plus-one-icon" />
+        </LoadingFab>
       </Grid>
     </Grid>
   );
