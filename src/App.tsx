@@ -46,7 +46,12 @@ function App() {
   return (
     <Container>
       <Snackbar open={error != null} autoHideDuration={6000}>
-        <MuiAlert elevation={6} variant="filled" severity="error">
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="error"
+          data-testid="error-alert"
+        >
           An error occurred
         </MuiAlert>
       </Snackbar>

@@ -1,5 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "./App";
+import { server } from "./mocks/server.js";
+import { rest } from "msw";
 
 test("renders header and avatar components", () => {
   // Given the app renders
@@ -93,4 +95,21 @@ test("renders update loaded state", async () => {
 
   // And the updated count value is visible
   expect(screen.getByTestId("count-value").innerHTML).toEqual("235");
+});
+
+test("renders error alert when initial request fails", async () => {
+  server.use(
+    rest.get("/api/count/get", (req, res, ctx) => {
+      return res(ctx.status(500), ctx.json({}));
+    })
+  );
+
+  // Given the app renders
+  render(<App />);
+
+  // And the first request to get the count is sent
+  // And the request fails
+  await waitFor(() =>
+    expect(screen.queryByTestId("error-alert")).toBeInTheDocument()
+  );
 });
