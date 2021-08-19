@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function InitialLoadingView() {
-  return <CircularProgress />;
+  return <CircularProgress data-testid="initial-loading-indicator" />;
 }
 
 function App() {
@@ -55,7 +55,7 @@ function App() {
         spacing={0}
         direction="column"
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         style={{ minHeight: "100vh" }}
       >
         <Paper
@@ -81,6 +81,7 @@ function App() {
                 alt="Purple Cow"
                 className={classes.avatar}
                 src="***REMOVED***"
+                data-testid="avatar"
               />
             </Grid>
           </Grid>

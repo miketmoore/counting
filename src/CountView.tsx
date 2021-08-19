@@ -12,7 +12,13 @@ export function CountView({
   isLoading: boolean;
 }) {
   return (
-    <Grid container spacing={3} justifyContent="center" alignItems="center">
+    <Grid
+      container
+      spacing={3}
+      justifyContent="center"
+      alignItems="center"
+      data-testid="count-view"
+    >
       <Grid item>
         <Typography variant="h3" component="h2">
           Count: <span data-testid="count-value">{count}</span>
