@@ -8,17 +8,13 @@ import {
   Container,
   Grid,
   Snackbar,
-  List,
-  ListItem,
-  ListItemText,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MuiAlert from "@material-ui/lab/Alert";
 import { CountView } from "./CountView";
+import { CountsSeen } from "./CountsSeen";
 
 import "@fontsource/roboto";
-import { useState } from "react";
-import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,14 +43,6 @@ function App() {
     count,
     requestUpdatedCount,
   } = useCount();
-
-  const [countsSeen, setCountsSeen] = useState<number[]>([]);
-
-  useEffect(() => {
-    if (count > 0 && !countsSeen.includes(count)) {
-      setCountsSeen([count, ...countsSeen]);
-    }
-  }, [count, countsSeen]);
 
   return (
     <Container>
@@ -140,16 +128,7 @@ function App() {
             spacing={3}
           >
             <Grid item>
-              <Typography variant="h5" component="h2">
-                Counts Seen
-              </Typography>
-              <List dense={true}>
-                {countsSeen.map((countSeen) => (
-                  <ListItem key={countSeen}>
-                    <ListItemText primary={countSeen} />
-                  </ListItem>
-                ))}
-              </List>
+              <CountsSeen count={count} />
             </Grid>
           </Grid>
         </Paper>
