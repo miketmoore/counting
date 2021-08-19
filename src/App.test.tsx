@@ -1,10 +1,4 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "./App";
 
 test("renders header and avatar components", () => {
@@ -82,9 +76,6 @@ test("renders update loaded state", async () => {
   // When the user clicks the update button
   const button = screen.getByTestId("update-button");
   fireEvent.click(button);
-
-  // await waitForElementToBeRemoved(() => screen.queryByTestId("plus-one-icon"));
-  // await waitForElementToBeRemoved(screen.getByTestId("plus-one-icon"));
 
   // Then the loading button is visible
   await waitFor(() =>
