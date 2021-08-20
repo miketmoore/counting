@@ -1,6 +1,8 @@
 # Counting App
 
-## Run With Single Command
+## Run
+
+Install docker and run the following command:
 
 ```
 docker-compose up -d
