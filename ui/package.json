@@ -15,6 +15,7 @@
     "@types/node": "^16.6.1",
     "@types/react": "^17.0.18",
     "@types/react-dom": "^17.0.9",
+    "config": "^3.3.6",
     "msw": "^0.34.0",
     "prettier": "^2.3.2",
     "react": "^17.0.2",
@@ -48,5 +49,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3002"
+  "proxy": "http://localhost:3001",
+  "alias": {
+    "config": "./config.ts"
+  }
 }

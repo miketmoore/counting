@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { apiBase } from "./config";
 
 export const useUpdateCount = ({
   requestEnabled,
@@ -20,7 +21,9 @@ export const useUpdateCount = ({
       };
       try {
         setIsLoading(true);
-        const response = await fetch("/api/count/update", { method: "PUT" });
+        const response = await fetch(`${apiBase}/count/update`, {
+          method: "PUT",
+        });
         if (response.status >= 400) {
           handleError("Update request returned an error");
         }

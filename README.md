@@ -2,30 +2,8 @@
 
 ## Run With Single Command
 
-TODO map this to docker command
-
 ```
-yarn run
+docker-compose -f ./docker-compose/docker-compose.yml up -d
 ```
 
-### Local Development
-
-## Install
-
-```
-git clone git@github.com:miketmoore/counting.git
-cd counting
-yarn install
-```
-
-## Run App
-
-```
-PORT=3000 yarn start
-```
-
-## Format Code
-
-```
-yarn format
-```
+This command will serve the application to http://localhost:3000

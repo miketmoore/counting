@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { apiBase } from "./config";
 
 export const useGetInitialCount = ({ enabled }: { enabled: boolean }) => {
   const [count, setCount] = useState<number | null>(null);
@@ -14,7 +15,9 @@ export const useGetInitialCount = ({ enabled }: { enabled: boolean }) => {
       };
       try {
         setIsLoading(true);
-        const response = await fetch("/api/count/get", { method: "GET" });
+        const response = await fetch(`${apiBase}/count/get`, {
+          method: "GET",
+        });
         if (response.status >= 400) {
           handleError("Get request returned an error");
         }

@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 80;
+const port = process.env.PORT ? process.env.PORT : 80;
 const countapi = require("countapi-js");
 
 const apiKey = "***REMOVED***";
@@ -18,15 +18,6 @@ const errorHandler = (_, res) => (error) => {
   console.log(error);
   res.json({ message: "An error occurred" });
 };
-
-app.get("/", (req, res) => {
-  return res.json({
-    status: 200,
-    data: {
-      message: "Hello from Express!",
-    },
-  });
-});
 
 app.get("/count/get", (req, res) => {
   countapi
