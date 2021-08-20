@@ -3,10 +3,10 @@ const app = express();
 const port = process.env.PORT ? process.env.PORT : 80;
 const countapi = require("countapi-js");
 
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.COUNTING_API_KEY;
 if (!apiKey || typeof apiKey !== "string" || apiKey.trim("") === "") {
   console.error(
-    "The API_KEY environment variable must be defined and a valid, non-empty string"
+    "The COUNTING_API_KEY environment variable must be defined and a valid, non-empty string"
   );
   process.exit(1);
 }

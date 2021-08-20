@@ -10,6 +10,8 @@ services:
     image: "miketmoore/api:1.0.0"
     networks:
       - miketmoore/network
+    environment:
+      - COUNTING_API_KEY=${COUNTING_API_KEY}
   reverseproxy:
     build: ./nginx
     image: "miketmoore/reverseproxy:1.0.0"

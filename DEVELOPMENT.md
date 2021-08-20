@@ -17,7 +17,7 @@ cd $CLONE_PATH/server && yarn install
 
 ```
 cd $CLONE_PATH
-PORT=3001 API_KEY="valid-countapi-key-string" node server/index.js
+PORT=3001 COUNTING_API_KEY="valid-countapi-key-string" node server/index.js
 ```
 
 Available at http://localhost:3001
