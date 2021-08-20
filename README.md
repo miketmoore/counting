@@ -12,7 +12,7 @@ cd counting
 Install docker and run the following command:
 
 ```
-docker-compose up -d
+COUNTING_API_KEY="your-countapi-key" docker-compose up -d
 ```
 
 This command will serve the application to http://localhost:3000
