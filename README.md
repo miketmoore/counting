@@ -1,4 +1,4 @@
-# ***REMOVED*** - Count App
+# Counting App
 
 ## Run With Single Command
 
