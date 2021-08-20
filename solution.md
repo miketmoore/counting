@@ -1,23 +1,16 @@
 # Solution
 
-## Clone git repo
+## Run with single command
 
-```
-git clone git@github.com:miketmoore/counting.git
-cd counting
-```
+View instructions in README.md
 
-## Run via docker
+## Run for UI development
 
-```
-docker build . -t miketmoore/counting
-docker run -p 3001:3001 -d miketmoore/counting
-```
+View instructions in DEVELOPMENT.md
 
-## Test server via curl
+## Future Changes
 
-This should return a response body like `{"count":46011}`
-
-```
-curl -i localhost:3001/api/count/get
-```
+- Make use of something like https://github.com/lorenwest/node-config and replace `ui/src/config.ts` with this solution
+- Add end-to-end tests with cypress or playwright
+- Add breakpoints using material-ui to control responsiveness for smaller screen sizes
+- Add more unit and integration tests

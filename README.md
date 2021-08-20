@@ -1,5 +1,12 @@
 # Counting App
 
+## Clone
+
+```
+git clone git@github.com:miketmoore/counting.git
+cd counting
+```
+
 ## Run
 
 Install docker and run the following command:
