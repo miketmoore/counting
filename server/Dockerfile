@@ -1,17 +1,8 @@
-FROM node:14
-
-# Create app directory
-WORKDIR /usr/src/app
-
-# Install app dependencies
-COPY package.json ./
-COPY yarn.lock ./
-
+FROM node:13.12.0-alpine
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY . /app
+# RUN npm ci --loglevel verbose
 RUN yarn install
-
-# Bundle app source
-COPY . .
-
-EXPOSE 3002
-
-CMD [ "node", "server/index.js" ]
+EXPOSE 80
+CMD [ "node", "index.js" ]

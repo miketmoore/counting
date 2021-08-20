@@ -1,22 +1,14 @@
-FROM node:14
-
-# Create app directory
-WORKDIR /usr/src/app
-
-# Install app dependencies
-COPY package.json ./
-COPY yarn.lock ./
-COPY ./public/* ./public/
-COPY ./src/* ./src/
-COPY tsconfig.json ./
-
+# dockerfile
+# stage 1
+FROM node:14-alpine as build
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY . /app
+# RUN npm ci --loglevel verbose
 RUN yarn install
 RUN yarn run build
-RUN yarn global add serve
-
-# Bundle app source
-COPY . .
-
-EXPOSE 3001
-
-CMD [ "serve", "-p", "3001", "-s", "./ui/build" ]
+# # stage 2
+FROM nginx:1.16.0-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
