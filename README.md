@@ -1,13 +1,5 @@
 # ***REMOVED*** - Count App
 
-## TODO
-
-* Extract API key to environment variable
-* Setup docker and document for single command
-* Use UI framework to make it look nice
-* Add msw for API testing?
-
-
 ## Run With Single Command
 
 TODO map this to docker command
