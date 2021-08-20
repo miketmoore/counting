@@ -2,20 +2,20 @@ version: "3"
 services:
   frontend:
     build: ./ui
-    image: "reactapp:1.0.0"
+    image: "miketmoore/ui:1.0.0"
     networks:
-      - sub-etha
+      - miketmoore/network
   backend:
     build: ./server
-    image: "expressapp:1.0.0"
+    image: "miketmoore/api:1.0.0"
     networks:
-      - sub-etha
-  revproxy:
+      - miketmoore/network
+  reverseproxy:
     build: ./nginx
-    image: "reverseproxy:1.0.0"
+    image: "miketmoore/reverseproxy:1.0.0"
     networks:
-      - sub-etha
+      - miketmoore/network
     ports:
       - "3000:80"
 networks:
-  sub-etha:
+  miketmoore/network:
