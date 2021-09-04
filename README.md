@@ -1,5 +1,8 @@
 # Counting App
 
+This is a simple React app that talks to a server which is a reverse proxy to a 3rd party "count API".
+You'll need to create a free API key via the documentation here: https://countapi.xyz/.
+
 ## Clone
 
 ```
