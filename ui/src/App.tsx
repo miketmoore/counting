@@ -2,7 +2,6 @@ import "./App.css";
 import { useCount } from "./useCount";
 import {
   CircularProgress,
-  Avatar,
   Typography,
   Paper,
   Container,
@@ -82,14 +81,6 @@ function App() {
               <Typography variant="h3" component="h1">
                 The Counting App!
               </Typography>
-            </Grid>
-            <Grid item>
-              <Avatar
-                alt="The Counting App!"
-                className={classes.avatar}
-                src="/***REMOVED***"
-                data-testid="avatar"
-              />
             </Grid>
           </Grid>
           <Grid
