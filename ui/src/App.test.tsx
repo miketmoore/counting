@@ -7,7 +7,7 @@ test("renders header and avatar components", () => {
   // Given the app renders
   render(<App />);
   // Then the main title should render
-  expect(screen.getByText("***REMOVED***")).toBeInTheDocument();
+  expect(screen.getByText("The Counting App!")).toBeInTheDocument();
   // And the avatar should render
   expect(screen.getByTestId("avatar")).toBeInTheDocument();
 });

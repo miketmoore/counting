@@ -80,14 +80,14 @@ function App() {
           >
             <Grid item>
               <Typography variant="h3" component="h1">
-                ***REMOVED***
+                The Counting App!
               </Typography>
             </Grid>
             <Grid item>
               <Avatar
-                alt="Purple Cow"
+                alt="The Counting App!"
                 className={classes.avatar}
-                src="***REMOVED***"
+                src="/***REMOVED***"
                 data-testid="avatar"
               />
             </Grid>
